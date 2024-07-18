@@ -5,11 +5,11 @@
         <groupId>in.virit.sb</groupId>
         <artifactId>viritin-addon-project-parent</artifactId>
         <version>0.0.3</version>
-        <relativePath />
+        <relativePath/>
     </parent>
     <groupId>in.virit</groupId>
     <artifactId>emit-reading-api</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
     <inceptionYear>2024</inceptionYear>
 
@@ -29,8 +29,7 @@
         <url>https://github.com/viritin/emit-reading-api</url>
         <connection>scm:git:git://github.com/viritin/emit-reading-api.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:/viritin/emit-reading-api.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+    </scm>
 
     <issueManagement>
         <system>GitHub</system>
