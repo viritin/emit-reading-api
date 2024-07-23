@@ -10,7 +10,7 @@
     <groupId>in.virit</groupId>
     <artifactId>emit-reading-api</artifactId>
     <name>Emit Reading API for Vaadin</name>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.0.2</version>
     <packaging>jar</packaging>
     <inceptionYear>2024</inceptionYear>
 
@@ -30,7 +30,7 @@
         <url>https://github.com/viritin/emit-reading-api</url>
         <connection>scm:git:git://github.com/viritin/emit-reading-api.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:/viritin/emit-reading-api.git</developerConnection>
-      <tag>HEAD</tag>
+      <tag>emit-reading-api-0.0.2</tag>
   </scm>
 
     <issueManagement>
