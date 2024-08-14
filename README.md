@@ -1,4 +1,4 @@
-# Emit250 eCard reader integration for Vaadin (and example project for Vaadin with clean pom and without production profile)
+# Emit250 eCard reader integration for Vaadin
 
 Provides a Java/Vaadin API for [Emit 250 reader](https://emit.no/en/nettbutikk/avlesningsenhet-usb/) USB device. The device, although a USB devices, essentially shows as a serial port to the operating system. Builds on [Web Serial API](https://developer.mozilla.org/en-US/docs/Web/API/Serial) and TypeScript [Emit250 eCard reader utility library by @mikaello](https://github.com/mikaello/emit-punch-cards-communication).
 
