@@ -51,11 +51,9 @@ export const open250 = async () => {
 
 }
 
-
 export const reconnect250 = async () => {
   try {
     if(!navigator.serial) {
-      debugger;
       throw new Error("Web Serial API not supported, use Chrome instead!");
     }
 
@@ -84,7 +82,6 @@ export const connect250 = async () => {
     open250();
 
   } catch (e) {
-
     console.error("250 serial", e);
     // Permission to access a device was denied implicitly or explicitly by the user.
   }

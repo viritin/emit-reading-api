@@ -24,19 +24,16 @@ public class Emit250ReaderButton extends Composite<Button> {
         getContent().setText("Connect Emit 250 Reader");
 
         getContent().getElement().executeJs("""
-                    this.addEventListener('click', () => {
-                    console.log('Clicked');
-                    window.connect250();
-                });
-            """);
+            this.addEventListener('click', () => {
+                window.connect250();
+            });
+        """);
 
         addAttachListener(e -> {
-            if(e.isInitialAttach()) {
-                // Try to reconnect existing
-                getContent().getElement().executeJs("""
-                        window.reconnect250();
-                        """);
-            }
+            // Try to reconnect (existing grant to a port)
+            getContent().getElement().executeJs("""
+                window.reconnect250();
+            """);
             DomListenerRegistration errorReg = e.getUI().getElement().addEventListener("reader250-error", e1 -> {
                 String msg = e1.getEventData().getString("event.detail");
                 if(msg.contains("port is already open")) {
