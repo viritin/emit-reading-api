@@ -3,11 +3,13 @@ package in.virit.emit;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.dependency.JavaScript;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.dom.DomListenerRegistration;
 import com.vaadin.flow.shared.Registration;
+import org.vaadin.addons.velocitycomponent.VElement;
 
 import java.util.Arrays;
 import java.util.function.Consumer;
@@ -23,36 +25,31 @@ public class Emit250ReaderButton extends Composite<Button> {
         this.ecardConsumer = ecardConsumer;
         getContent().setText("Connect Emit 250 Reader");
 
-        getContent().getElement().executeJs("""
-            this.addEventListener('click', () => {
-                window.connect250();
-            });
-        """);
+        getContent().addClickListener(e -> {
+            getContent().getElement().executeJs("window.connect250();");
+        });
 
         addAttachListener(e -> {
             // Try to reconnect (existing grant to a port)
             getContent().getElement().executeJs("""
                 window.reconnect250();
             """);
-            DomListenerRegistration errorReg = e.getUI().getElement().addEventListener("reader250-error", e1 -> {
-                String msg = e1.getEventData().getString("event.detail");
+            var errorReg = VElement.body().on("reader250-error", String.class, msg -> {
                 if(msg.contains("port is already open")) {
                     setVisible(false); // Hide the button by default
                     readerReadyCallback.run();
                 } else {
                     Notification.show("Error connecting to Emit 250 reader: " + msg);
-            }
-            }).addEventData("event.detail");
-            DomListenerRegistration connectedReg = e.getUI().getElement().addEventListener("connect-device-250", e1 -> {
+                }
+            });
+            var connectedReg = e.getUI().getElement().addEventListener("connect-device-250", e1 -> {
                 setVisible(false); // Hide the button by default
                 readerReadyCallback.run();
             });
             // ecard-readout-event
-            DomListenerRegistration readOutReg = e.getUI().getElement().addEventListener("ecard-readout-event", e1 -> {
-                String jsonstr = e1.getEventData().getString("event.detail");
-                Ecard250Readout ecard250 = Ecard250Readout.fromJson(jsonstr);
+            var readOutReg = VElement.body().on(Ecard250Readout.class, ecard250 -> {
                 ecardConsumer.accept(ecard250);
-            }).addEventData("event.detail");
+            });
             addDetachListener(detachEvent -> {
                 Arrays.asList(errorReg, connectedReg, readOutReg).forEach(Registration::remove);
             });
