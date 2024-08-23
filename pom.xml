@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>in.virit.sb</groupId>
         <artifactId>viritin-addon-project-parent</artifactId>
         <version>0.0.5</version>
-        <relativePath />
+        <relativePath/>
     </parent>
     <groupId>in.virit</groupId>
     <artifactId>emit-reading-api</artifactId>
@@ -15,7 +16,7 @@
     <inceptionYear>2024</inceptionYear>
 
     <description>Java/Vaadin API for Emit sport timing gear gear</description>
-    
+
     <url>https://github.com/viritin/emit-reading-api/</url>
 
     <organization>
@@ -30,8 +31,7 @@
         <url>https://github.com/viritin/emit-reading-api</url>
         <connection>scm:git:git://github.com/viritin/emit-reading-api.git</connection>
         <developerConnection>scm:git:ssh://git@github.com:/viritin/emit-reading-api.git</developerConnection>
-      <tag>HEAD</tag>
-  </scm>
+    </scm>
 
     <issueManagement>
         <system>GitHub</system>
@@ -43,17 +43,6 @@
             <url>http://www.gnu.org/licenses/gpl-3.0.txt</url>
         </license>
     </licenses>
-    <distributionManagement>
-        <snapshotRepository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
-        </snapshotRepository>
-        <repository>
-            <id>ossrh</id>
-            <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
-        </repository>
-    </distributionManagement>
-
 
     <dependencies>
         <!-- Essential Spring & Vaadin deps coming in via parent -->
@@ -70,7 +59,7 @@
             <version>2.8.22</version>
             <scope>test</scope>
         </dependency>
-                
+
         <!-- Devtools is cool, especially if you don't have JRebel -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -78,7 +67,7 @@
             <scope>test</scope>
             <optional>true</optional>
         </dependency>
-        
+
     </dependencies>
 
 </project>
