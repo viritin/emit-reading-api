@@ -19,12 +19,14 @@ public class Emit250ReaderButton extends Composite<Button> {
 
     private final Consumer<EcardReadoutEvent> ecardConsumer;
 
+    private boolean filterUsbReaders = true;
+
     public Emit250ReaderButton(Runnable readerReadyCallback, Consumer<EcardReadoutEvent> ecardConsumer) {
         this.ecardConsumer = ecardConsumer;
         getContent().setText("Connect Emit 250 Reader");
 
         getContent().addClickListener(e -> {
-            getContent().getElement().executeJs("window.connect250();");
+            getContent().getElement().executeJs("window.connect250($0);", filterUsbReaders);
         });
 
         addAttachListener(e -> {
@@ -55,4 +57,12 @@ public class Emit250ReaderButton extends Composite<Button> {
 
     }
 
+    /**
+     * Set to false to show all readers, not just USB readers.
+     *
+     * @param filterUsbReaders true to only show USB readers
+     */
+    public void setFilterUsbReaders(boolean filterUsbReaders) {
+        this.filterUsbReaders = filterUsbReaders;
+    }
 }

@@ -68,14 +68,17 @@ export const reconnect250 = async () => {
   }
 }
 
-export const connect250 = async () => {
+export const connect250 = async (filterUsbOnly: boolean) => {
   try {
-    port250 = await navigator.serial.requestPort({
-      filters: [{
-        usbVendorId: 0x0403,
-        usbProductId: 0x6001,
-      }]
-    });
+      const filter = filterUsbOnly ?
+            {
+                filters: [{
+                          usbVendorId: 0x0403,
+                          usbProductId: 0x6001,
+                        }]
+            } : {};
+
+    port250 = await navigator.serial.requestPort(filter);
 
     console.log("250 port acquired", port250);
 

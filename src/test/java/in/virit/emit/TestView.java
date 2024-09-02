@@ -24,6 +24,7 @@ public class TestView extends VerticalLayout {
                     readouts.add(0, ecard);
                     grid.setItems(readouts);
                 });
+        emit250ReaderButton.setFilterUsbReaders(true);
         add(emit250ReaderButton);
         add(grid);
     }
