@@ -3,11 +3,9 @@ package in.virit.emit;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.Tag;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.dependency.JavaScript;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.dependency.NpmPackage;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.dom.DomListenerRegistration;
 import com.vaadin.flow.shared.Registration;
 import org.vaadin.addons.velocitycomponent.VElement;
 
@@ -19,9 +17,9 @@ import java.util.function.Consumer;
 @JsModule("./emit-reading.ts")
 public class Emit250ReaderButton extends Composite<Button> {
 
-    private final Consumer<Ecard250Readout> ecardConsumer;
+    private final Consumer<EcardReadoutEvent> ecardConsumer;
 
-    public Emit250ReaderButton(Runnable readerReadyCallback, Consumer<Ecard250Readout> ecardConsumer) {
+    public Emit250ReaderButton(Runnable readerReadyCallback, Consumer<EcardReadoutEvent> ecardConsumer) {
         this.ecardConsumer = ecardConsumer;
         getContent().setText("Connect Emit 250 Reader");
 
@@ -47,7 +45,7 @@ public class Emit250ReaderButton extends Composite<Button> {
                 readerReadyCallback.run();
             });
             // ecard-readout-event
-            var readOutReg = VElement.body().on(Ecard250Readout.class, ecard250 -> {
+            var readOutReg = VElement.body().on(EcardReadoutEvent.class, ecard250 -> {
                 ecardConsumer.accept(ecard250);
             });
             addDetachListener(detachEvent -> {

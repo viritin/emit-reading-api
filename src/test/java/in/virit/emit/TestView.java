@@ -12,9 +12,9 @@ import java.util.List;
 @Route
 public class TestView extends VerticalLayout {
 
-    VGrid<Ecard250Readout> grid = new VGrid<>(Ecard250Readout.class);
+    VGrid<EcardReadoutEvent> grid = new VGrid<>(EcardReadoutEvent.class);
 
-    List<Ecard250Readout> readouts = new ArrayList<>();
+    List<EcardReadoutEvent> readouts = new ArrayList<>();
 
     public TestView() {
         add(new H1("Hello Emit!"));
