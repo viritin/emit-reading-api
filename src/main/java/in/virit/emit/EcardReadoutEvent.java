@@ -1,8 +1,5 @@
 package in.virit.emit;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import java.util.List;
 
 public record EcardReadoutEvent(
@@ -18,12 +15,4 @@ public record EcardReadoutEvent(
     boolean validTransferCheckByte,
     boolean finishedReading
 ) {
-    private static final ObjectMapper objectMapper = new ObjectMapper();
-    public static EcardReadoutEvent fromJson(String json) {
-        try {
-            return objectMapper.readValue(json, EcardReadoutEvent.class);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

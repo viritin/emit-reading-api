@@ -39,7 +39,7 @@ export const open250 = async () => {
 
       if (value) {
         console.log("250 value", value);
-        const readoutEvent = new CustomEvent("ecard-readout", { detail: JSON.stringify(value) });
+        const readoutEvent = new CustomEvent("ecard-readout", { detail: value });
         document.body.dispatchEvent(readoutEvent);
       }
     }
