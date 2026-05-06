@@ -3,7 +3,15 @@ import {
   EmitEkt250TransformStream,
   serialOptions250,
 } from "@mikaello/emit-punch-cards-communication";
+import { ftdiSerial } from "./ftdi-webusb";
 import { SerialPort, SerialOptions } from "./serial-types";
+
+// On Android, navigator.serial doesn't surface USB-serial adapters and the
+// stock CDC-ACM polyfills can't drive an FTDI FT232 (which speaks a
+// vendor-specific protocol). Route through our FTDI-over-WebUSB shim there.
+// Everywhere else, prefer the native Web Serial API.
+const isAndroid = /android/i.test(navigator.userAgent);
+const serial: any = (!isAndroid && (navigator as any).serial) || ftdiSerial;
 
 let port250: SerialPort | null = null;
 let inputDone250: Promise<void> | null = null;
@@ -53,11 +61,11 @@ export const open250 = async () => {
 
 export const reconnect250 = async () => {
   try {
-    if(!navigator.serial) {
+    if(!serial) {
       throw new Error("Web Serial API not supported, use Chrome instead!");
     }
 
-    const ports = await navigator.serial.getPorts();
+    const ports = await serial.getPorts();
     if (ports.length) {
       port250 = ports[0];
       console.log("Already granted 250 port selected", port250);
@@ -70,15 +78,14 @@ export const reconnect250 = async () => {
 
 export const connect250 = async (filterUsbOnly: boolean) => {
   try {
-      const filter = filterUsbOnly ?
-            {
-                filters: [{
-                          usbVendorId: 0x0403,
-                          usbProductId: 0x6001,
-                        }]
-            } : {};
+    // When no specific filter is requested, still constrain to the FTDI
+    // vendor: native Web Serial accepts an empty filter object, but the
+    // WebUSB picker (used by our Android shim) rejects an empty filter list.
+    const filter = filterUsbOnly
+      ? { filters: [{ usbVendorId: 0x0403, usbProductId: 0x6001 }] }
+      : { filters: [{ usbVendorId: 0x0403 }] };
 
-    port250 = await navigator.serial.requestPort(filter);
+    port250 = await serial.requestPort(filter);
 
     console.log("250 port acquired", port250);
 
